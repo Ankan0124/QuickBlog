@@ -1,2 +1,7 @@
-node_modules
-.env
+# Block .env files anywhere in the project
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Block dependencies for both folders
+**/node_modules/

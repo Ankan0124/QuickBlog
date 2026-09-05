@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAppContext } from "../context/AppContext";
 
@@ -29,7 +29,7 @@ const Account = () => {
     }
   };
 
-  if (!user) return null;
+  if (!user) return <Navigate to="/login" replace />;
 
   const canManageContent = ["author", "admin"].includes(user.role);
 

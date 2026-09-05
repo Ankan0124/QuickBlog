@@ -44,10 +44,13 @@ export const getDashboard = async (req, res) => {
       Blog.countDocuments({ ...blogFilter, isPublished: false }),
     ]);
 
-    const comments =
-      req.user.role === "admin"
-        ? await Comment.countDocuments()
-        : await Comment.countDocuments({ blog: { $in: recentBlogs.map((blog) => blog._id) } });
+    let comments;
+    if (req.user.role === "admin") {
+      comments = await Comment.countDocuments();
+    } else {
+      const authorBlogIds = await Blog.find(blogFilter).distinct("_id");
+      comments = await Comment.countDocuments({ blog: { $in: authorBlogIds } });
+    }
 
     res.json({
       success: true,

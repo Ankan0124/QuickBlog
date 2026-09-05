@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
-const commentSchema = new mongoose.Schema({
-    blog : {type:mongoose.Schema.Types.ObjectId, ref: 'blog', required: true},
-    name: {type: String, required: true},
-    content: {type: String, required: true},
-    isApproved: {type: Boolean, default: false}
-},{timestamps: true});
+const commentSchema = new mongoose.Schema(
+  {
+    blog: { type: mongoose.Schema.Types.ObjectId, ref: "blog", required: true },
+    // Optional to preserve comments created before reader accounts existed.
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    name: { type: String, required: true },
+    content: { type: String, required: true },
+    isApproved: { type: Boolean, default: false },
+  },
+  { timestamps: true },
+);
 
-const Comment = mongoose.model('comment', commentSchema);
+const Comment = mongoose.model("comment", commentSchema);
 
 export default Comment;
